@@ -15,20 +15,34 @@
  */
 
 /**
- * Analyze incoming message and generate a summary as a response
+ *  Use Watson API to translate message with provided watson translation
+ *  username the watson translation api username
+ *  password the watson translation api password
+ *  the message to translate to
+ *  By default, translate the message from en to es.
  */
-function transform(events) {
-  var average = 0;
-  for (var i = 0; i < events.length; i++) {
-    average += events[i].payload.velocity;
-  }
-  average = average / events.length;
-  var result = {
-    "agent": "OpenWhisk action",
-    "events_count": events.length,
-    "avg_velocity": average
-  };
-  return result;
+function translate(username, password, message) {
+    var promise = new Promise(function (resolve, reject) {
+            var LanguageTranslatorV2 = require('watson-developer-cloud/language-translator/v2');
+
+            var language_translator = new LanguageTranslatorV2({
+                username: username,
+                password: password,
+                url: 'https://gateway.watsonplatform.net/language-translator/api/'
+            });
+
+            language_translator.translate({
+                    text: message, source: 'en', target: 'es'
+                },
+                function (err, translation) {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(translation);
+                });
+        }
+    );
+    return promise;
 }
 
 /**
@@ -39,8 +53,8 @@ function mhpost(args) {
   console.log("DEBUG: Received message as input: " + JSON.stringify(args));
 
   return new Promise(function(resolve, reject) {
-    if (!args.topic || !args.events || !args.events[0] || !args.kafka_rest_url || !args.api_key)
-      reject("Error: Invalid arguments. Must include topic, events[], kafka_rest_url, api_key.");
+    if (!args.topic || !args.events || !args.events[0] || !args.kafka_rest_url || !args.api_key || !args.username || !args.password)
+      reject("Error: Invalid arguments. Must include topic, events[], kafka_rest_url, api_key, translation service username and password. ");
 
     // construct CF-style VCAP services JSON
     var vcap_services = {
@@ -54,18 +68,21 @@ function mhpost(args) {
 
     var MessageHub = require('message-hub-rest');
     var kafka = new MessageHub(vcap_services);
-    var transformedMessage = transform(args.events);
-    console.log("DEBUG: Message to be published: " + JSON.stringify(transformedMessage));
+    translate(args.username, args.password, args.events[0].payload.sentence).then(text => {
+        console.log("DEBUG: Message to be published: " + JSON.stringify(text));
+      kafka.produce(args.topic, JSON.stringify(text))
+          .then(function() {
+              resolve({
+                  "result": "Success: Message was sent to IBM Message Hub."
+              });
+          })
+          .fail(function(error) {
+              reject(error);
+          });
+  })catch(error => {
+          console.log(error);
+  });
 
-    kafka.produce(args.topic, transformedMessage)
-      .then(function() {
-        resolve({
-          "result": "Success: Message was sent to IBM Message Hub."
-        });
-      })
-      .fail(function(error) {
-        reject(error);
-      });
   });
 }
 

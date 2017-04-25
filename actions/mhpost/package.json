@@ -5,7 +5,8 @@
   "author": "IBM",
   "license": "Apache-2.0",
   "dependencies": {
-    "message-hub-rest": "1.2.0"
+    "message-hub-rest": "1.2.0",
+    "watson-developer-cloud": "2.29.0"
   },
   "main": "index.js"
 }

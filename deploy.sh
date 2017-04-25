@@ -31,7 +31,9 @@ function install() {
   wsk package bind kafka kafka-out-binding \
     --param api_key ${API_KEY} \
     --param kafka_rest_url ${KAFKA_REST_URL} \
-    --param topic ${DEST_TOPIC}
+    --param topic ${DEST_TOPIC} \
+    --param username ${WATSON_TRANSLATIONAPI_USERNAME} \
+    --param password ${WATSON_TRANSLATIONAPI_PASSWORD}
   wsk package get --summary kafka-out-binding
 
   echo "Creating the kafka-trigger trigger"
@@ -84,6 +86,8 @@ function showenv() {
   echo -e KAFKA_INSTANCE_NAME="$KAFKA_INSTANCE_NAME"
   echo -e SRC_TOPIC="$SRC_TOPIC"
   echo -e DEST_TOPIC="$DEST_TOPIC"
+  echo -e WATSON_TRANSLATIONAPI_USERNAME="$WATSON_TRANSLATIONAPI_USERNAME"
+  echo -e WATSON_TRANSLATIONAPI_USERNAME="$WATSON_TRANSLATIONAPI_PASSWORD"
 }
 
 case "$1" in

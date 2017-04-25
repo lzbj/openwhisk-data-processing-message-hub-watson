@@ -5,3 +5,4 @@ local.env
 backup.sh
 actions/mhpost/node_modules
 actions/mhpost/mhpost.zip
+.idea

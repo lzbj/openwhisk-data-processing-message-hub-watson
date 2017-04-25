@@ -7,6 +7,7 @@
     "timestamp": "2011-01-01T11:11:11.111+02",
     "payload": {
       "velocity": 10,
+      "sentence": "Every man is a poet when he is in love",
       "type": "taxi",
       "name": "taxi1",
       "location": {
@@ -22,6 +23,7 @@
     "timestamp": "2012-02-02T22:22:22.222+02",
     "payload": {
       "velocity": 20,
+      "sentence": "Success is the sum of small efforts, repeated day in and day out.",
       "type": "taxi",
       "name": "taxi2",
       "location": {
@@ -37,6 +39,7 @@
     "timestamp": "2013-03-03T13:33:33.333+02",
     "payload": {
       "velocity": 30,
+      "sentence": "Get outside every day. Miracles are waiting everywhere.",
       "type": "taxi",
       "name": "taxi3",
       "location": {
@@ -52,6 +55,7 @@
     "timestamp": "2014-04-04T14:44:44.444+02",
     "payload": {
       "velocity": 40,
+      "sentence": "Maybe the best response to the facts of death is just put it out of your mind.",
       "type": "taxi",
       "name": "taxi4",
       "location": {
