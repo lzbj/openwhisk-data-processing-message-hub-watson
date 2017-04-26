@@ -1,3 +1,7 @@
+#Disclaimer
+This repo is a clone of [openwhisk-data-processing-message-hub](https://github.com/IBM/openwhisk-data-processing-message-hub.git), with some change
+to show how to integrate with Watson API call, just for training or demo purpose.
+
 [![Build Status](https://travis-ci.org/IBM/openwhisk-data-processing-message-hub.svg?branch=master)](https://travis-ci.org/IBM/openwhisk-data-processing-message-hub)
 
 # Message Hub data processing with OpenWhisk
