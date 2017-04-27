@@ -76,7 +76,9 @@ wsk package create kafka
 wsk package bind kafka kafka-out-binding \
   --param api_key ${API_KEY} \
   --param kafka_rest_url ${KAFKA_REST_URL} \
-  --param topic ${DEST_TOPIC}
+  --param topic ${DEST_TOPIC} \
+  --param username ${WATSON_TRANSLATIONAPI_USERNAME} \
+  --param password ${WATSON_TRANSLATIONAPI_PASSWORD}
 wsk package get --summary kafka-out-binding
 ```
 
