@@ -79,7 +79,7 @@ function mhpost(args) {
           .fail(function(error) {
               reject(error);
           });
-  })catch(error => {
+  }).catch(error => {
           console.log(error);
   });
 
